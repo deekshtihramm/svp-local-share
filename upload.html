@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload File - SVP Share</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">SVP Local Share</div>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="upload.html">Upload</a>
+        <a href="download.html">Download</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section class="upload-section">
+
+    <h1>Upload Files</h1>
+    <p>Select a file and upload it to your local network</p>
+
+    <div class="upload-card">
+
+        <input type="file" id="fileInput" class="file-input">
+
+        <button class="primary-btn" onclick="uploadFile()">Upload File</button>
+
+        <p id="uploadStatus" class="status-text"></p>
+
+    </div>
+
+</section>
+
+<script>
+        
+    // Upload
+    function uploadFile() {
+        let file = document.getElementById("fileInput").files[0];
+
+        if (!file) {
+            alert("Select a file first");
+            return;
+        }
+
+        let files = JSON.parse(localStorage.getItem("files")) || [];
+
+        files.push(file.name);
+        localStorage.setItem("files", JSON.stringify(files));
+
+        document.getElementById("uploadStatus").innerText =
+            "Uploaded: " + file.name;
+
+            
+        alert("File uploaded: " + file.name);
+    }
+
+</script>
+
+</body>
+</html>

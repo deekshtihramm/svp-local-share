@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download Files - SVP Share</title>
+
+    <!-- Internal CSS -->
+    <style>
+
+        /* Base */
+        body {
+            margin: 0;
+            font-family: Inter, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 60px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-weight: bold;
+        }
+
+        nav a {
+            margin-right: 20px;
+            text-decoration: none;
+            color: #374151;
+        }
+
+        /* Section */
+        .download-section {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .download-section p {
+            color: #6b7280;
+        }
+
+        /* Card */
+        .download-card {
+            background: white;
+            padding: 30px;
+            width: 400px;
+            margin: auto;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Button */
+        .primary-btn {
+            padding: 10px 20px;
+            background: #111827;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* File list */
+        .file-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .file-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .file-list button {
+            padding: 6px 12px;
+            background: #111827;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">SVP Local Share</div>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="upload.html">Upload</a>
+        <a href="download.html">Download</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section class="download-section">
+
+    <h1>Available Files</h1>
+    <p>View and download files shared on your network</p>
+
+    <div class="download-card">
+
+        <button class="primary-btn" onclick="loadFiles()">Load Files</button>
+
+        <ul id="fileList" class="file-list"></ul>
+
+    </div>
+
+</section>
+
+<script>
+
+    // Load Files
+    function loadFiles() {
+        let files = JSON.parse(localStorage.getItem("files")) || [];
+        let list = document.getElementById("fileList");
+
+        list.innerHTML = "";
+
+        if (files.length === 0) {
+            list.innerHTML = "<li>No files found</li>";
+            return;
+        }
+
+        files.forEach(file => {
+            let li = document.createElement("li");
+            li.innerHTML =
+                file +
+                ` <button onclick="downloadFile('${file}')">Download</button>`;
+            list.appendChild(li);
+        });
+    }
+
+    // Fake Download
+    function downloadFile(name) {
+        alert("Downloading: " + name);
+    }
+
+</script>
+
+</body>
+</html>

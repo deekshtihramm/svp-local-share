@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact - SVP Share</title>
+</head>
+
+<body style="margin:0; font-family:Arial, sans-serif; background:#f9fafb;">
+
+<header style="display:flex; justify-content:space-between; align-items:center; padding:15px 60px; background:white; border-bottom:1px solid #e5e7eb;">
+
+    <div style="font-weight:bold;">SVP Local Share</div>
+
+    <nav>
+        <a href="home.html" style="margin-right:20px; text-decoration:none; color:#374151;">Home</a>
+        <a href="upload.html" style="margin-right:20px; text-decoration:none; color:#374151;">Upload</a>
+        <a href="download.html" style="margin-right:20px; text-decoration:none; color:#374151;">Download</a>
+        <a href="contact.html" style="text-decoration:none; color:#374151;">Contact</a>
+    </nav>
+
+</header>
+
+<section style="text-align:center; margin-top:100px;">
+
+    <h1>Contact Us</h1>
+    <p style="color:#6b7280;">Have questions or feedback? Send us a message.</p>
+
+    <div style="background:white; padding:30px; width:350px; margin:auto; border-radius:10px; border:1px solid #e5e7eb; display:flex; flex-direction:column;">
+
+        <input type="text" id="name" placeholder="Your Name"
+            style="padding:10px; margin-bottom:15px; border:1px solid #d1d5db; border-radius:6px;">
+
+        <textarea id="message" maxlength="999" oninput="countChars()"
+            placeholder="Your Message"
+            style="padding:10px; margin-bottom:10px; border:1px solid #d1d5db; border-radius:6px; height:100px;"></textarea>
+
+        <p id="charCount" style="font-size:14px; color:#6b7280;">
+            Remaining: 999 characters
+        </p>
+
+        <button onclick="sendMessage()"
+            style="padding:10px; background:#111827; color:white; border:none; border-radius:6px; cursor:pointer;">
+            Send Message
+        </button>
+
+        <p id="response" style="margin-top:10px; color:green;"></p>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function sendMessage() {
+    let nameInput = document.getElementById("name");
+    let msgInput = document.getElementById("message");
+
+    let name = nameInput.value;
+    let msg = msgInput.value;
+
+    if (!name || !msg) {
+        alert("Fill all fields");
+        return;
+    }
+
+    document.getElementById("response").innerText =
+        "Message sent successfully!";
+
+    nameInput.value = "";
+    msgInput.value = "";
+}
+
+function countChars() {
+    let text = document.getElementById("message").value;
+
+    // Remove special characters (keep only letters, numbers, spaces)
+    let cleanText = text.replace(/[^a-zA-Z0-9 ]/g, "");
+
+    let remaining = 999 - cleanText.length;
+
+    let counter = document.getElementById("charCount");
+
+    counter.innerText = "Remaining: " + numberToWords(remaining);
+
+    if (remaining <= 50) {
+        counter.style.color = "red";
+    } else {
+        counter.style.color = "#6b7280";
+    }
+}
+
+function numberToWords(num) {
+
+    let ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+    let teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+                 "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+    let tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+    if (num === 0) return "Zero";
+
+    let words = "";
+
+    if (Math.floor(num / 100) > 0) {
+        words += ones[Math.floor(num / 100)] + " Hundred ";
+        num = num % 100;
+    }
+
+    if (num >= 10 && num < 20) {
+        words += teens[num - 10];
+    } else {
+        words += tens[Math.floor(num / 10)] + " ";
+        words += ones[num % 10];
+    }
+
+    return words.trim();
+}
+
+</script>
+
+</body>
+</html>

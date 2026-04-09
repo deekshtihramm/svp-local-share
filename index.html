@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SVP Share</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">SVP Local Share</div>
+
+    <nav>
+
+        <a href="home.html">Home</a>
+        <a href="upload.html">Upload</a>
+        <a href="download.html">Download</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+</header>
+
+<!-- Hero -->
+<section class="hero">
+    <h1>Simple & Secure File Sharing</h1>
+    <p>Upload, manage, and share files across your network effortlessly.</p>
+
+    <div class="actions">
+        <button class="primary-btn" onclick="showRegister()">Get Started</button>
+        <a href="upload.html" class="secondary-btn">Upload File</a>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features">
+
+    <div class="card">
+        <h3>⚡ Fast Transfer</h3>
+        <p>Share files instantly within your local network.</p>
+    </div>
+
+    <div class="card">
+        <h3>🔒 Secure</h3>
+        <p>Your files stay private inside your LAN.</p>
+    </div>
+
+    <div class="card">
+        <h3>📁 Easy Access</h3>
+        <p>Download files anytime with one click.</p>
+    </div>
+
+</section>
+
+<!-- Registration Section -->
+<section class="register-section hidden" id="register">
+
+    <h1>Create Your Account</h1>
+    <p>Start sharing files securely</p>
+
+    <div class="register-card">
+
+        <input type="text" id="regUser" placeholder="Username">
+        <input type="password" id="regPass" placeholder="Password">
+
+        <select id="country" onchange="showCapital(this.value)">
+            <option value="">Select Country</option>
+            <option value="India">India</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Japan">Japan</option>
+            <option value="Australia">Australia</option>
+        </select>
+
+        <p id="capital"></p>
+
+        <button class="primary-btn" onclick="registerUser()">Register</button>
+
+        <p id="regStatus" class="status-text"></p>
+
+    </div>
+
+    
+
+</section>
+
+<script>
+
+    function registerUser() {
+        let user = document.getElementById("regUser").value;
+        let pass = document.getElementById("regPass").value;
+
+        if (!user || !pass) {
+            alert("Fill all fields");
+            return;
+        }
+
+        let country = document.getElementById("country").value;
+
+        if (!country) {
+            alert("Please select a country");
+            return;
+        }
+
+        // CAPTCHA (random numbers)
+        let num1 = Math.floor(Math.random() * 10);
+        let num2 = Math.floor(Math.random() * 10);
+
+        let answer = prompt("Captcha: What is " + num1 + " + " + num2 + "?");
+
+        if (answer == null) {
+            alert("Captcha cancelled");
+            return;
+        }
+
+        if (Number(answer) !== (num1 + num2)) {
+            alert("Wrong Captcha! Try again.");
+            return;
+        }
+
+        // CONFIRM
+        let confirmReg = confirm("Do you want to register?");
+
+        if (!confirmReg) {
+            alert("Registration Cancelled");
+            return;
+        }
+
+        // SUCCESS
+        document.getElementById("regStatus").innerText =
+            "Registered successfully!";
+
+        document.getElementById("regUser").value = "";
+        document.getElementById("regPass").value = "";
+
+        alert("Registered Successfully!");
+
+        let section = document.getElementById("register");
+        let getStartedBtn = document.querySelector(".actions .primary-btn");
+
+        if (section.style.display === "block") {
+            section.style.display = "none";
+            getStartedBtn.style.display ="none";
+        } else {
+            section.style.display = "block";
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
+    function showRegister() {
+
+        let section = document.getElementById("register");
+
+        if (section.style.display === "block") {
+            section.style.display = "none";
+        } else {
+            section.style.display = "block";
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+
+    }
+
+    function showCapital(country) {
+
+        let capitals = {
+            India: "New Delhi",
+            USA: "Washington, D.C.",
+            UK: "London",
+            Japan: "Tokyo",
+            Australia: "Canberra"
+        };
+
+        document.getElementById("capital").innerText =
+            capitals[country] || "";
+    }
+
+</script>
+
+</body>
+
+</html>
